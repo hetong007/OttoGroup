@@ -17,3 +17,6 @@
 
 *.pem
 
+# plda files
+# code/plda/*.o
+
