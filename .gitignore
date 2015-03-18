@@ -18,5 +18,7 @@
 *.pem
 
 # plda files
-# code/plda/*.o
+code/plda/*.o
+code/plda/lda
+code/plda/infer
 
