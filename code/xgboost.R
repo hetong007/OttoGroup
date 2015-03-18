@@ -32,8 +32,8 @@ cv.nround = 5000
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 
                 nfold = 5, nrounds=cv.nround)
 bst.cv = apply(as.data.frame(bst.cv),2,as.numeric)
-plot(bst.cv[,1],type='l',ylim = range(bst.cv[,1],bst.cv[,3]))
-lines(bst.cv[,3],col=2)
+# plot(bst.cv[,1],type='l',ylim = range(bst.cv[,1],bst.cv[,3]))
+# lines(bst.cv[,3],col=2)
 
 # Prediction
 nround = 1000
