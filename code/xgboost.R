@@ -1,4 +1,5 @@
 require(xgboost)
+require(methods)
 load('../data/dat.rda')
 y = y-1 # xgboost take features in [0,numOfClass)
 
