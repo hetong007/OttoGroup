@@ -5,7 +5,7 @@ y = y-1 # xgboost take features in [0,numOfClass)
 
 thread = 8
 param <- list("objective" = "multi:softprob",
-              "bst:eta" = 0.005,
+              "bst:eta" = 0.01,
               "bst:max_depth" = 20,
               "gamma" = 1,
               "eval_metric" = "mlogloss",
@@ -13,8 +13,9 @@ param <- list("objective" = "multi:softprob",
               "min_child_weight" = 50,
               "subsample" = 0.9,
               "num_class" = 9,
+              "colsample_bytree" = 1,
               "nthread" = thread)
-cv.nround = 10
+cv.nround = 1000
 
 # Cross Validation
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 

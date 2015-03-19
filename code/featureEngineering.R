@@ -15,9 +15,13 @@ tfidf = function(Mat)
 }
 
 tfidfx = tfidf(x)
-
 # col bind together
 x = cBind(x,tfidfx)
+
+# LDA-20 feature
+# system('bash plda.sh')
+pldamat = readLines('../data/plda.model')
+
 
 # End of feature engineering
 save(x,y,trind,teind,file='../data/dat.rda')

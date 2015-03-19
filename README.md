@@ -1,5 +1,4 @@
 # OttoGroup
-=============
 
 ```
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
