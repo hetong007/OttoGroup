@@ -20,8 +20,9 @@ x = cBind(x,tfidfx)
 
 # LDA-20 feature
 # system('bash plda.sh')
-pldamat = readLines('../data/plda.model')
-
+pldamat = read.table('../data/plda.model')
+nms = plda[,1]
+plda = plda[,-1]
 
 # End of feature engineering
 save(x,y,trind,teind,file='../data/dat.rda')

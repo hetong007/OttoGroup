@@ -24,4 +24,4 @@ code/plda/lda
 code/plda/infer
 *.txt
 *.data
-*.model
+# *.model
