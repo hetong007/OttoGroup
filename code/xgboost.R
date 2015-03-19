@@ -15,19 +15,19 @@ mlogloss <- function(preds, dtrain) {
     return(list(metric = "mlogloss", value = err))
 }
 
-thread = 8
+thread = 6
 param <- list("objective" = "multi:softprob",
-              "bst:eta" = 0.005,
-              "bst:max_depth" = 10,
+              "bst:eta" = 0.01,
+              "bst:max_depth" = 20,
               "gamma" = 1,
               "eval_metric" = "merror",
               "silent" = 1,
-              "min_child_weight" = 100,
+              "min_child_weight" = 50,
               "subsample" = 0.75,
               "num_class" = 9,
-              "colsample_bytree" = 0.5,
+              "colsample_bytree" = 1,
               "nthread" = thread)
-cv.nround = 5000
+cv.nround = 1000
 
 # Cross Validation
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 

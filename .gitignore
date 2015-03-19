@@ -16,9 +16,12 @@
 *.rda
 
 *.pem
+*.ppk
 
 # plda files
 code/plda/*.o
 code/plda/lda
 code/plda/infer
-
+*.txt
+*.data
+*.model

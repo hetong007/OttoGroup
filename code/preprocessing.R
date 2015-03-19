@@ -14,3 +14,15 @@ trind = 1:length(y)
 teind = (nrow(train)+1):nrow(x)
  
 save(x,y,trind,teind,file='../data/oridat.rda')
+
+# Save to plda format
+words = paste0('f',1:93)
+pldaout = rep('',nrow(x))
+for (i in 1:nrow(x))
+{
+  ind = which(x[i,]>0)
+  pldaout[i] = paste(words[ind],x[i,ind],collapse=' ',sep=' ')
+  cat(i,'\r')
+}
+writeLines(pldaout,'../data/plda.data')
+
