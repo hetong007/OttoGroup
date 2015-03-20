@@ -30,8 +30,15 @@ plda = diag(1/rS) %*% plda
 
 pldax = x %*% plda
 
+# Statistics of the data
+rSx = rowSums(x!=0)
+tmp = by(as.matrix(x[trind,]),as.factor(y),colSums)
+tmp = do.call(cbind,tmp)
+tmp = tmp %*% diag(1/colSums(tmp))
+Bayesx = x %*% tmp
+
 # col bind together
-x = cBind(x,tfidfx,pldax)
+x = cBind(x,tfidfx,pldax,rSx,Bayesx)
 
 # End of feature engineering
 save(x,y,trind,teind,file='../data/dat.rda')

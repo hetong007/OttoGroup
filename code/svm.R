@@ -1,21 +1,10 @@
-require(xgboost)
+require(e1071)
 require(methods)
 load('../data/dat.rda')
-y = y-1 # xgboost take features in [0,numOfClass)
 
-thread = 8
-param <- list("objective" = "multi:softprob",
-              "bst:eta" = 0.05,
-              "bst:max_depth" = 20,
-              "gamma" = 1,
-              "eval_metric" = "mlogloss",
-              "silent" = 1,
-              "min_child_weight" = 50,
-              "subsample" = 0.8,
-              "num_class" = 9,
-              "colsample_bytree" = 1,
-              "nthread" = thread)
-cv.nround = 1000
+svm.model = svm(x = x[trind,], y = as.factor(y))
+
+cv.nround = 2000
 
 # Cross Validation
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 
@@ -25,8 +14,7 @@ plot(bst.cv[,1],type='l',ylim = range(bst.cv[,1],bst.cv[,3]))
 lines(bst.cv[,3],col=2)
 
 # Prediction
-valid_uplim = bst.cv[,3]+bst.cv[,4]
-nround = which.min(valid_uplim)
+nround = 2000
 bst = xgboost(param=param, data = x[trind,], label = y, nrounds=nround)
 pred = predict(bst,x[teind,])
 pred = matrix(pred,9,length(pred)/9)
