@@ -15,14 +15,23 @@ tfidf = function(Mat)
 }
 
 tfidfx = tfidf(x)
-# col bind together
-x = cBind(x,tfidfx)
 
 # LDA-20 feature
 # system('bash plda.sh')
-pldamat = read.table('../data/plda.model')
-nms = plda[,1]
+plda = read.table('../data/plda.model')
+nms = as.character(plda[,1])
+nms = as.numeric(gsub('f','',nms))
+ind = order(nms)
 plda = plda[,-1]
+plda = plda[ind,]
+plda = as.matrix(plda)
+rS = rowSums(plda)
+plda = diag(1/rS) %*% plda
+
+pldax = x %*% plda
+
+# col bind together
+x = cBind(x,tfidfx,pldax)
 
 # End of feature engineering
 save(x,y,trind,teind,file='../data/dat.rda')

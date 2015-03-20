@@ -11,21 +11,21 @@ param <- list("objective" = "multi:softprob",
               "eval_metric" = "mlogloss",
               "silent" = 1,
               "min_child_weight" = 50,
-              "subsample" = 0.9,
+              "subsample" = 1,
               "num_class" = 9,
               "colsample_bytree" = 1,
               "nthread" = thread)
-cv.nround = 1000
+cv.nround = 2000
 
 # Cross Validation
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 
-                nfold = 2, nrounds=cv.nround)
+                nfold = 3, nrounds=cv.nround)
 bst.cv = apply(as.data.frame(bst.cv),2,as.numeric)
 plot(bst.cv[,1],type='l',ylim = range(bst.cv[,1],bst.cv[,3]))
 lines(bst.cv[,3],col=2)
 
 # Prediction
-nround = 6000
+nround = 2000
 bst = xgboost(param=param, data = x[trind,], label = y, nrounds=nround)
 pred = predict(bst,x[teind,])
 pred = matrix(pred,9,length(pred)/9)
