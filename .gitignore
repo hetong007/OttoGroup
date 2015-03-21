@@ -16,8 +16,8 @@
 *.rda
 
 *.log
-*.pem
-*.ppk
+# *.pem
+# *.ppk
 
 # plda files
 code/plda/*.o
