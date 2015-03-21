@@ -15,6 +15,7 @@
 *.zip
 *.rda
 
+*.log
 *.pem
 *.ppk
 

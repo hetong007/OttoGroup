@@ -17,6 +17,19 @@ tfidf = function(Mat)
 tfidfx = tfidf(x)
 
 # BM25
+bm25 = function(Mat,k1=1.5,b=0.75)
+{
+    oneMat = Mat==1
+    rS = colSums(oneMat)
+    idf = log((nrow(Mat)-rS+0.5)/(rS+0.5))
+    tf = Diagonal(x = 1/rowSums(Mat)) %*% Mat
+    avgdl = mean(rowSums(Mat))
+    tfreg = tf*(k1+1)/(tf+k1*(1-b+b*nrow(Mat)/avgdl))
+    BM25 = tfreg %*% Diagonal(x=idf)
+    return(BM25)
+}
+
+bm25x = bm25(x)
 
 # LDA-20 feature
 # system('bash plda.sh')
@@ -40,7 +53,7 @@ tmp = tmp %*% diag(1/colSums(tmp))
 Bayesx = x %*% tmp
 
 # col bind together
-x = cBind(x,tfidfx,pldax,rSx,Bayesx)
+x = cBind(x,tfidfx,bm25x,pldax,rSx,Bayesx)
 
 # End of feature engineering
 save(x,y,trind,teind,file='../data/dat.rda')
