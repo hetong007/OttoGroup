@@ -16,6 +16,8 @@ tfidf = function(Mat)
 
 tfidfx = tfidf(x)
 
+# BM25
+
 # LDA-20 feature
 # system('bash plda.sh')
 plda = read.table('../data/plda.model')
