@@ -2,7 +2,7 @@ generateDesc = function(param,nround,cvres)
 {
     namelist = c('eta','max_depth','gamma','min_child_weight',
                  'subsample','colsample_bytree')
-    res = paste0('nround',nround,'cv',cvres[nround,3])
+    res = paste0('cv',cvres[nround,3],'nround',nround)
     pname = names(param)
     for (nm in namelist)
     {
