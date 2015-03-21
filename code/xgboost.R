@@ -3,9 +3,9 @@ require(methods)
 load('../data/dat.rda')
 y = y-1 # xgboost take features in [0,numOfClass)
 
-thread = 8
+thread = 16
 param <- list("objective" = "multi:softprob",
-              "bst:eta" = 0.05,
+              "bst:eta" = 0.03,
               "bst:max_depth" = 20,
               "gamma" = 1,
               "eval_metric" = "mlogloss",
@@ -15,7 +15,7 @@ param <- list("objective" = "multi:softprob",
               "num_class" = 9,
               "colsample_bytree" = 1,
               "nthread" = thread)
-cv.nround = 1000
+cv.nround = 1500
 
 # Cross Validation
 bst.cv = xgb.cv(param=param, data = x[trind,], label = y, 
