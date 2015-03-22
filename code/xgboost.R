@@ -31,7 +31,8 @@ Pred = matrix(0,length(teind),9)
 num_bag = 10
 for (i in 1:num_bag)
 {
-    bst = xgboost(param=param, data = x[sample(trind),], label = y, 
+    ind = sample(trind)
+    bst = xgboost(param=param, data = x[ind,], label = y[ind], 
                   nrounds=nround)
     pred = predict(bst,x[teind,])
     pred = matrix(pred,9,length(pred)/9)
@@ -43,4 +44,4 @@ Pred = Pred/num_bag
 # Output
 source('output.R')
 desc = generateDesc(param,nround,bst.cv,num_bag)
-makeSubmission(pred,desc)
+makeSubmission(Pred,desc)
