@@ -26,3 +26,4 @@ code/plda/infer
 *.txt
 *.data
 # *.model
+*.pdf
