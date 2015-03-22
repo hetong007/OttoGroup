@@ -5,7 +5,7 @@ y = y-1 # xgboost take features in [0,numOfClass)
 
 thread = 16
 param <- list("objective" = "multi:softprob",
-              "bst:eta" = 0.03,
+              "bst:eta" = 0.05,
               "bst:max_depth" = 20,
               "gamma" = 1,
               "eval_metric" = "mlogloss",
@@ -13,7 +13,7 @@ param <- list("objective" = "multi:softprob",
               "min_child_weight" = 50,
               "subsample" = 0.8,
               "num_class" = 9,
-              "colsample_bytree" = 1,
+              "colsample_bytree" = 0.8,
               "nthread" = thread)
 cv.nround = 1500
 
@@ -27,12 +27,20 @@ lines(bst.cv[,3],col=2)
 # Prediction
 valid_uplim = bst.cv[,3]+bst.cv[,4]
 nround = which.min(valid_uplim)
-bst = xgboost(param=param, data = x[trind,], label = y, nrounds=nround)
-pred = predict(bst,x[teind,])
-pred = matrix(pred,9,length(pred)/9)
-pred = t(pred)
+Pred = matrix(0,length(teind),9)
+num_bag = 10
+for (i in 1:num_bag)
+{
+    bst = xgboost(param=param, data = x[sample(trind),], label = y, 
+                  nrounds=nround)
+    pred = predict(bst,x[teind,])
+    pred = matrix(pred,9,length(pred)/9)
+    pred = t(pred)
+    Pred = Pred+pred
+}
+Pred = Pred/num_bag
 
 # Output
 source('output.R')
-desc = generateDesc(param,nround,bst.cv)
+desc = generateDesc(param,nround,bst.cv,num_bag)
 makeSubmission(pred,desc)
