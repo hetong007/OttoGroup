@@ -28,26 +28,10 @@ param <- list("objective" = "multi:softprob",
               "num_class" = 9,
               "colsample_bytree" = 0.5,
               "nthread" = thread)
-cv.nround = 5000
+cv.nround = 10000
 
 # Cross Validation
 ind = sample(1:length(y),2000)
 bst.cv = xgb.cv(param=param, data = x[ind,1:20], label = y[ind], 
                 nfold = 3, nrounds=cv.nround,feval=mlogloss)
-bst.cv = apply(as.data.frame(bst.cv),2,as.numeric)
-plot(bst.cv[,1],type='l',ylim = range(bst.cv[,1],bst.cv[,3]))
-lines(bst.cv[,3],col=2)
-
-# Prediction
-valid_uplim = bst.cv[,3]+bst.cv[,4]
-nround = which.min(valid_uplim)
-bst = xgboost(param=param, data = x[trind,], label = y, nrounds=nround)
-pred = predict(bst,x[teind,])
-pred = matrix(pred,9,length(pred)/9)
-pred = t(pred)
-
-# Output
-source('output.R')
-desc = generateDesc(param,nround,bst.cv)
-makeSubmission(pred,desc)
 
