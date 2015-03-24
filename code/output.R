@@ -1,8 +1,8 @@
-generateDesc = function(param,nround,cvres)
+generateDesc = function(param,nround,cvres,num_bag,comments)
 {
     namelist = c('eta','max_depth','gamma','min_child_weight',
-                 'subsample','colsample_bytree')
-    res = paste0('cv',cvres[nround,3],'nround',nround)
+                 'subsample','colsample_bytree','bag')
+    res = paste0('cv',cvres[nround,3],'nround',nround,'bag',num_bag)
     pname = names(param)
     for (nm in namelist)
     {
@@ -10,6 +10,7 @@ generateDesc = function(param,nround,cvres)
         if (length(ind>0))
             res = paste0(res,nm,param[[ind]])
     }
+    res = paste0(res,comments)
     return(res)
 }
 
