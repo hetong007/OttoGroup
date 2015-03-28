@@ -12,7 +12,7 @@ for(depth in seq(6, 16, by=2)){
                             "eval_metric" = "mlogloss",
                             "eta"=eta,
                             "max_depth"=depth,
-                            "num_class" = 9,
+                            "num_class" = 3,
                             "nthread" = 8)
         tuning.cv = xgb.cv(param=tuning_param, 
                             data = train_mat, 
